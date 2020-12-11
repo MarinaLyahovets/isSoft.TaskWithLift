@@ -17,7 +17,7 @@ class BuildingTest {
     }
 
     @Test
-    void of_invalid() {
+    void of_invalidNumberOfElevators_equal_to_NumberOfFloors() {
         assertThrows(IllegalArgumentException.class, ()->{
             Building building = Building.of(1, 1);
         });
@@ -27,14 +27,6 @@ class BuildingTest {
     void of_invalidNumberOfElevators() {
         assertThrows(IllegalArgumentException.class, ()->{
             Building building = Building.of(12, 0);
-        });
-    }
-
-    @Test
-    void of_invalidNumberOfFloors() {
-
-        assertThrows(IllegalArgumentException.class, ()->{
-            Building building = Building.of(22, 5);
         });
     }
 

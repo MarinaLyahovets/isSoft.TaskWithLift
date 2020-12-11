@@ -22,7 +22,6 @@ public class ServiceFloor implements FloorService {
 
     private List<Floor> floorList;
 
-
     private ServiceFloor(List<Floor> floorList) {
         log.debug("Service floor is creating");
         this.floorList = floorList;
@@ -42,26 +41,24 @@ public class ServiceFloor implements FloorService {
         return floorList.get(numberFloor - 1);
     }
 
-
     @Override
     public Floor nextFloor(Floor floor, Direction direction) {
         checkNotNull(floor, "Floor is null!");
         checkNotNull(direction, "Direction is null");
 
-
         if (direction == Direction.UP) {
             if (floor.getKindFloor() != KindFloor.LAST) {
                 int numberNextFloor = floor.getFloorNumber() + 1;
-                log.info("{} now in the {} floor", Thread.currentThread().getName(), floor.getFloorNumber());
+                log.info("{} now on the {} floor", Thread.currentThread().getName(), floor.getFloorNumber());
                 floor = getFloor(numberNextFloor);
-                log.info("{} move to the {} floor",Thread.currentThread().getName(), numberNextFloor);
+                log.info("{} moved to the {} floor",Thread.currentThread().getName(), numberNextFloor);
             }
         } else {
             if (floor.getKindFloor() != KindFloor.FIRST) {
                 int numberPreviewFloor = floor.getFloorNumber() - 1;
                 log.info("{} now in the {} floor", Thread.currentThread().getName(), floor.getFloorNumber());
                 floor = getFloor(numberPreviewFloor);
-                log.info("{} move to the {} floor", Thread.currentThread().getName(),numberPreviewFloor);
+                log.info("{} moved to the {} floor", Thread.currentThread().getName(),numberPreviewFloor);
 
             }
         }
@@ -77,11 +74,11 @@ public class ServiceFloor implements FloorService {
         if((floorNumberNow - floorNumberWhichCall < 0 && direction == Direction.DOWN) ||
                 (floorNumberWhichCall - floorNumberNow < 0 && direction == Direction.UP)){
 
-            log.info("{} now in {} floor", Thread.currentThread().getName(), floorNumberNow);
+            log.info("{} now on the {} floor", Thread.currentThread().getName(), floorNumberNow);
 
             TimeUnit.SECONDS.sleep(Math.abs(floorNumberNow - floorNumberWhichCall) * Elevator.LIFT_SPEED);
 
-            log.info("{} переместился на {}", Thread.currentThread().getName(), floorNumberWhichCall);
+            log.info("{} moved to {} floor", Thread.currentThread().getName(), floorNumberWhichCall);
 
             return getFloor(floorNumberWhichCall);
         }

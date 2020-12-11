@@ -1,6 +1,5 @@
 package com.marinad.service.implementation;
 
-import com.google.common.base.Preconditions;
 import com.marinad.entity.Elevator;
 import com.marinad.entity.Floor;
 import com.marinad.entity.KindFloor;

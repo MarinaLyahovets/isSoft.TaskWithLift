@@ -8,7 +8,6 @@ import java.util.Random;
 
 public class GenerationRandomPeople implements PersonService {
 
-
     private final Random random = new Random();
 
     @Override

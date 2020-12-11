@@ -4,7 +4,6 @@ import com.marinad.service.CallService;
 import com.marinad.service.FloorService;
 import com.marinad.statistics.ServiceStatistics;
 import com.marinad.statistics.Statistics;
-import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +27,6 @@ public class Elevator extends Thread {
     public static final int MAX_NUMBER_OF_FLOORS = 1000;
     public static final int MIN_NUMBER_OF_FLOORS = 0;
 
-
-
     private Direction direction;
     private Floor floor;
     private int weight;
@@ -51,8 +48,6 @@ public class Elevator extends Thread {
         this.isDoorOpened = false;
     }
 
-
-
     @SneakyThrows
     @Override
     public void run() {
@@ -62,9 +57,8 @@ public class Elevator extends Thread {
 
         floor = serviceFloor.getFloor(1);
 
-        Call call = serviceCall.takeCall();
         while (!isStop()) {
-
+            Call call = getNextCall();
             this.direction = call.getDirection();
             int minFloor = MAX_NUMBER_OF_FLOORS;
             int maxFloor = MIN_NUMBER_OF_FLOORS;
@@ -92,7 +86,6 @@ public class Elevator extends Thread {
                     {
                         landingPeople();
                         needCloseDoor();
-                        call = getNextCall();
                     }
                 }
 
@@ -113,7 +106,6 @@ public class Elevator extends Thread {
                     {
                         landingPeople();
                         needCloseDoor();
-                        call = getNextCall();
                     }
                 }
             }
@@ -158,7 +150,7 @@ public class Elevator extends Thread {
         personList.add(person);
         weight += person.getWeight();
         log.info("Floor: {}, Add {}", floor.getFloorNumber(), person);
-        log.info("Lifting capacity = {}", weight);
+        log.info("Load elevator = {}", weight);
         addServiceStatistics(person);
         return person.getFloorNumber();
     }

@@ -21,14 +21,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Getter
 public class Building {
 
-
     private final int numberOfFloors;
     private final int numberOfElevators;
     private final List<Floor> floors;
     private final BlockingQueue<Call> callQueue = new LinkedBlockingQueue<>();
     private final List<Elevator> elevators;
-
-
 
     @SneakyThrows
     private Building(int numberOfFloors, int numberOfElevators) {
@@ -47,7 +44,7 @@ public class Building {
     }
 
     public static Building of(int numberOfFloors, int numberOfElevators){
-        checkArgument(numberOfFloors > 1 && numberOfFloors <= 20, "Incorrect number of floors");
+        checkArgument(numberOfFloors > 1 , "Incorrect number of floors");
         checkArgument(numberOfElevators < numberOfFloors && numberOfElevators > 0, "Incorrect number of elevators");
 
         return new Building(numberOfFloors, numberOfElevators);

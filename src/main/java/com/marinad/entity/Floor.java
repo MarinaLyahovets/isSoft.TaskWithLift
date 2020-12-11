@@ -100,10 +100,9 @@ public class Floor extends Thread {
                 serviceCall.addCall(floorNumber, Direction.UP);
             }
             log.info("Up: {}, Down: {}", queueUp, queueDown);
-            TimeUnit.SECONDS.sleep(9);
+            TimeUnit.SECONDS.sleep(15);
         }
     }
-
 
     public void setCallService(CallService serviceCall) {
         checkNotNull(serviceCall, "Service call is null");
@@ -124,7 +123,6 @@ public class Floor extends Thread {
         this.generationRandomPeople = generationRandomPeople;
     }
 
-
     public void stoppedThread(){
         stopped = true;
     }
@@ -144,8 +142,6 @@ public class Floor extends Thread {
     public void onClickedUp(){
         isClickedUp = true;
     }
-
-
 
     public Person takePersonFromQueueUp(int freeWeightInElevator){
         checkArgument(freeWeightInElevator >= 0, "free lifting capacity less than 0!");

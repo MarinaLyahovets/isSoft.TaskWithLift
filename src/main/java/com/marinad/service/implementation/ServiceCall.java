@@ -1,6 +1,5 @@
 package com.marinad.service.implementation;
 
-import com.google.common.base.Preconditions;
 import com.marinad.entity.Call;
 import com.marinad.entity.Direction;
 import com.marinad.service.CallService;
@@ -31,7 +30,6 @@ public class ServiceCall implements CallService {
         return new ServiceCall(queueCall);
     }
 
-
     @Override
     public Call removeCall(int floorNumber, Direction direction){
         checkNotNull(direction, "Direction is null!");
@@ -45,7 +43,7 @@ public class ServiceCall implements CallService {
 
         lock.unlock();
         if(!isRemoved){
-            return call = null;
+            return null;
         }
         log.info("Remove call: {}", call);
 

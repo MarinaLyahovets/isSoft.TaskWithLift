@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 
 public class MainApp {
 
-
     @SneakyThrows
     public static void main(String[] args) {
 
