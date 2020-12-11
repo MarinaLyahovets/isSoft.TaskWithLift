@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ServiceCall implements CallService {
 
     private final BlockingQueue<Call> queueCall;
+    private final Lock lock = new ReentrantLock(true);
+
 
     private ServiceCall(BlockingQueue<Call> queueCall) {
         log.debug("Service call is creating");
@@ -35,7 +37,6 @@ public class ServiceCall implements CallService {
         checkNotNull(direction, "Direction is null!");
         checkArgument(floorNumber > 0, "Floor number less than 0 or equals 0");
 
-        Lock lock = new ReentrantLock(true);
         lock.lock();
 
         Call call = Call.of(floorNumber, direction);
@@ -56,7 +57,6 @@ public class ServiceCall implements CallService {
         checkArgument( floorNumber >= 0 && floorNumber < 50, "Incorrect floor number!");
         checkNotNull(direction, "state is null!");
 
-        Lock lock = new ReentrantLock(true);
         lock.lock();
 
         Call call = Call.of(floorNumber, direction);
@@ -72,12 +72,8 @@ public class ServiceCall implements CallService {
     @SneakyThrows
     @Override
     public Call takeCall(){
-        Lock lock = new ReentrantLock(true);
-        lock.lock();
 
         Call call = queueCall.take();
-
-        lock.unlock();
 
         log.info("Take call: {}", call);
 
