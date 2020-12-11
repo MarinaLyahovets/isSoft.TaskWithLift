@@ -12,6 +12,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -20,7 +22,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 @Slf4j
 @Getter
 public class Building {
-
+    private final UUID id;
     private final int numberOfFloors;
     private final int numberOfElevators;
     private final List<Floor> floors;
@@ -31,7 +33,7 @@ public class Building {
     private Building(int numberOfFloors, int numberOfElevators) {
 
         log.info("Building is creating");
-
+        this.id = UUID.randomUUID();
         BuildingService buildingService = new BuildingServiceImplementation();
 
         this.numberOfFloors = numberOfFloors;
@@ -79,5 +81,18 @@ public class Building {
 
     public List<Call> getCallQueue() {
         return List.copyOf(callQueue);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return Objects.equals(id, building.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

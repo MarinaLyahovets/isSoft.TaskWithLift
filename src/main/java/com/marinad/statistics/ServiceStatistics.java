@@ -6,18 +6,19 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.text.html.HTMLDocument;
 import java.util.Objects;
+import java.util.UUID;
 
 @Slf4j
 @Getter
 public class ServiceStatistics {
-
     private final int numberFloorTo;
     private final int numberFloorFrom;
 
     private ServiceStatistics(int numberFloorFrom, int numberFloorTo) {
-
+        log.debug("Service statistics creating!");
         this.numberFloorFrom = numberFloorFrom;
         this.numberFloorTo = numberFloorTo;
+        log.debug("Service statistics created!");
     }
 
     public static ServiceStatistics of(int numberFloorFrom, int numberFloorTo){

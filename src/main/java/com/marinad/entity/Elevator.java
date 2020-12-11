@@ -7,10 +7,7 @@ import com.marinad.statistics.Statistics;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -27,6 +24,8 @@ public class Elevator extends Thread {
     public static final int MAX_NUMBER_OF_FLOORS = 1000;
     public static final int MIN_NUMBER_OF_FLOORS = 0;
 
+    private final UUID id;
+
     private Direction direction;
     private Floor floor;
     private int weight;
@@ -42,6 +41,7 @@ public class Elevator extends Thread {
     private final Map<ServiceStatistics, Integer> serviceStatisticsMap = new HashMap<>();
 
     public Elevator() {
+        this.id = UUID.randomUUID();
         this.direction = null;
         this.weight = 0;
         this.stop = false;
@@ -333,6 +333,19 @@ public class Elevator extends Thread {
 
     public Statistics getStatistics() {
         return statistics;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Elevator elevator = (Elevator) o;
+        return Objects.equals(id, elevator.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

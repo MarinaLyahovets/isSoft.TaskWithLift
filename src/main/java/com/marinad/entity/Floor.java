@@ -8,7 +8,9 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -30,6 +32,8 @@ public class Floor extends Thread {
     @Getter
     private boolean isClickedUp;
 
+    private final UUID id;
+
     private CallService serviceCall;
     private FloorService serviceFloor;
     @Getter
@@ -42,6 +46,7 @@ public class Floor extends Thread {
 
     private Floor(int floorNumber, KindFloor kindFloor){
         log.debug("Floor is creating");
+        this.id = UUID.randomUUID();
         this.floorNumber = floorNumber;
         this.kindFloor = kindFloor;
         this.queueDown = new ConcurrentLinkedQueue<>();
@@ -203,4 +208,16 @@ public class Floor extends Thread {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Floor floor = (Floor) o;
+        return Objects.equals(id, floor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
